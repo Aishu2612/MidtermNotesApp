@@ -33,7 +33,7 @@ function AddNote(props) {
           name="title"
           onChange={onTextChange}
           value={note.title}
-          placeholder="Note Title"
+          placeholder="Title"
         />
         <textarea
           name="content"
