@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Note from "./components/Note";
-import Notes from "./components/Notes";
+import AddNote from "./components/AddNote";
 import './App.css';
 import defaultNotes from './data/notes'
 
@@ -15,9 +15,9 @@ function App() {
     });
   }
 
-  function deleteNote(id) {
+  function delNote(id) {
     setNotes(prevNotes => {
-      return prevNotes.filter((noteItem, index) => {
+      return prevNotes.filter((note, index) => {
         return index !== id;
       });
     });
@@ -26,18 +26,19 @@ function App() {
   return (
     <div>
       <Header />
-      <Notes onAdd={addNote} />
-      {notes.map((noteItem, index) => {
-        return (
-          <Note
-            key={index}
-            id={index}
-            title={noteItem.title}
-            content={noteItem.content}
-            onDelete={deleteNote}
-          />
-        );
-      })}
+      <AddNote onAdd={addNote} />
+      {
+        notes.map((note, index) => {
+          return (
+            <Note
+              key={index}
+              id={index}
+              title={note.title}
+              content={note.content}
+              onDelete={delNote}
+            />
+          );
+        })}
       <Footer />
     </div>
   );

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-function Notes(props) {
+function AddNote(props) {
   const [note, setNote] = useState({
     title: "",
     content: ""
   });
 
-  function handleChange(event) {
+  function onTextChange(event) {
     const { name, value } = event.target;
 
     setNote(prevNote => {
@@ -31,15 +31,15 @@ function Notes(props) {
       <form>
         <input
           name="title"
-          onChange={handleChange}
+          onChange={onTextChange}
           value={note.title}
-          placeholder="Title"
+          placeholder="Note Title"
         />
         <textarea
           name="content"
-          onChange={handleChange}
+          onChange={onTextChange}
           value={note.content}
-          placeholder="Take a note..."
+          placeholder="Add note  ..."
           rows="3"
         />
         <button onClick={submitNote}>Add</button>
@@ -48,4 +48,4 @@ function Notes(props) {
   );
 }
 
-export default Notes;
+export default AddNote;
