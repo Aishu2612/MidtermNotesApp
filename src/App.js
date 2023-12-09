@@ -4,10 +4,11 @@ import Footer from "./components/Footer";
 import Note from "./components/Note";
 import AddNote from "./components/AddNote";
 
-import {collection, query, orderBy, onSnapshot} from "firebase/firestore"
+import {collection, query,  onSnapshot} from "firebase/firestore";
+
+import { doc, deleteDoc} from "firebase/firestore";
 import {db} from './auth/auth'
 import './App.css';
-import defaultNotes from './data/notes'
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -29,12 +30,15 @@ function App() {
     });
   }
 
-  function delNote(id) {
-    setNotes(prevNotes => {
-      return prevNotes.filter((note, index) => {
-        return index !== id;
-      });
-    });
+
+  async function handleDelete (note)  {
+    console.log(note);
+    const noteDocRef = doc(db, 'Notes', note.id)
+    try{
+      await deleteDoc(noteDocRef)
+    } catch (err) {
+      alert(err)
+    }
   }
 
   return (
@@ -50,11 +54,10 @@ function App() {
         notes.map((note, index) => {
           return (
             <Note
-              key={note.id}
-              id={index}
+              key={note.id}             
               title={note.data.title}
               content={note.data.content}
-              onDelete={delNote}
+              onDelete={()=>handleDelete(note)}
             />
           );
         })}

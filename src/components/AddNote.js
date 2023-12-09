@@ -1,29 +1,28 @@
 import React, { useState } from "react";
-
+import {db} from '../auth/auth';
+import {collection, addDoc} from 'firebase/firestore';
 function AddNote(props) {
-  const [note, setNote] = useState({
-    title: "",
-    content: ""
-  });
+  //const [note, setNote] = useState('');
 
-  function onTextChange(event) {
-    const { name, value } = event.target;
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
-    setNote(prevNote => {
-      return {
-        ...prevNote,
-        [name]: value
-      };
-    });
-  }
 
-  function submitNote(event) {
-    props.onAdd(note);
-    setNote({
-      title: "",
-      content: ""
-    });
-    event.preventDefault();
+ 
+
+  const add_submitNote = async (e) => {
+    e.preventDefault()
+    try {
+      await addDoc(collection(db, 'Notes'), {
+        title: title,
+        content:content
+      });
+
+      setTitle('');setContent('');
+     
+    } catch (err) {
+      alert(err)
+    }
   }
 
   return (
@@ -31,18 +30,18 @@ function AddNote(props) {
       <form>
         <input
           name="title"
-          onChange={onTextChange}
-          value={note.title}
+          onChange={(e) => setTitle(e.target.value)} 
+          value={title}
           placeholder="Title"
         />
         <textarea
           name="content"
-          onChange={onTextChange}
-          value={note.content}
+          onChange={(e) => setContent(e.target.value)} 
+          value={content}
           placeholder="Add note  ..."
           rows="3"
         />
-        <button onClick={submitNote}>Add</button>
+        <button onClick={add_submitNote}>Add</button>
       </form>
     </div>
   );
