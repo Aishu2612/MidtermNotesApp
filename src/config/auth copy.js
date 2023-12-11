@@ -7,15 +7,25 @@ import { getFirestore } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+//import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+
+//import { getAuth, signInWithRedirect,GoogleAuthProvider } from "firebase/auth";
+//const provider = new GoogleAuthProvider();
+//const auth = getAuth();
+//signInWithRedirect(auth, provider)
+
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCUWjU5CcWor_vIU98Rts7br3YmUgbEfRw",
-  authDomain: "notes-project-7343b.firebaseapp.com",
-  databaseURL: "https://notes-project-7343b-default-rtdb.firebaseio.com",
-  projectId: "notes-project-7343b",
-  storageBucket: "notes-project-7343b.appspot.com",
-  messagingSenderId: "216518094213",
-  appId: "1:216518094213:web:9e24504336f679cb7328ec",
-  measurementId: "G-WSX39M5K5V"
+  apiKey: "AIzaSyAV_vurT9zg_px3h0n3NmdX6etdWONT8Rs",
+  authDomain: "notes-app-715b9.firebaseapp.com",
+  projectId: "notes-app-715b9",
+  storageBucket: "notes-app-715b9.appspot.com",
+  messagingSenderId: "304291526402",
+  appId: "1:304291526402:web:44cca1cdcf818c7b53741b",
+  measurementId: "G-Q50SKL98TT"
 };
 
 // Initialize Firebase
@@ -24,4 +34,5 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore(app)
 
+//export {db,app,analytics,auth,provider}
 export {db,app,analytics}

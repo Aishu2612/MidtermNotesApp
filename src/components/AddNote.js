@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {db} from '../auth/auth';
+import {db} from '../config/auth';
 import {collection, addDoc} from 'firebase/firestore';
 function AddNote(props) {
   //const [note, setNote] = useState('');
