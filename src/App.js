@@ -1,17 +1,23 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Note from "./components/Note";
 import AddNote from "./components/AddNote";
+import Login from './auth/Login'
 
-import {collection, query,  onSnapshot} from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 
-import { doc, deleteDoc} from "firebase/firestore";
-import {db} from './auth/auth'
+import { doc, deleteDoc } from "firebase/firestore";
+import { db,auth } from './auth/auth'
 import './App.css';
+
+
+//import { signInWithPopup } from 'firebase/auth'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const notesColRef = query(collection(db, 'Notes'));
@@ -22,7 +28,7 @@ function App() {
         data: doc.data()
       })))
     })
-  },[])
+  }, [])
 
   function addNote(newNote) {
     setNotes(prevNotes => {
@@ -31,10 +37,10 @@ function App() {
   }
 
 
-  async function handleDelete (note)  {
+  async function handleDelete(note) {
     console.log(note);
     const noteDocRef = doc(db, 'Notes', note.id)
-    try{
+    try {
       await deleteDoc(noteDocRef)
     } catch (err) {
       alert(err)
@@ -42,7 +48,8 @@ function App() {
   }
 
   return (
-    
+    !user ?  <Login/> :
+
     <div>
       <Header />
       <AddNote onAdd={addNote} />
@@ -50,14 +57,14 @@ function App() {
         console.log(notes)
       }
       {
-      
+
         notes.map((note, index) => {
           return (
             <Note
-              key={note.id}             
+              key={note.id}
               title={note.data.title}
               content={note.data.content}
-              onDelete={()=>handleDelete(note)}
+              onDelete={() => handleDelete(note)}
             />
           );
         })}
